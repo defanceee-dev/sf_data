@@ -15,10 +15,13 @@
 
 <div id="menu"></div>
 
-<div class="floating-buttons">
-<button onclick="openContacts()">ℹ</button>
-<button onclick="openCart()">🛒</button>
+<div class="top-buttons">
+<button class="contact-btn" onclick="openContacts()">ℹ</button>
+<button class="cart-btn" onclick="openCart()">🛒 <span id="count">0</span></button>
 </div>
+
+<div id="cart-modal" class="modal hidden"></div>
+<div id="checkout-modal" class="modal hidden"></div>
 
 <script src="app.js"></script>
 </body>
