@@ -132,3 +132,189 @@ h1{margin:0;font-size:clamp(32px,4vw,54px);line-height:1;font-weight:800}
 }
 
 body{background:#bfa235 !important;}
+/* === Checkout modal upgrade === */
+
+.checkout-sheet-inner {
+  background: #fffdf7;
+  border-radius: 28px 28px 0 0;
+  padding: 16px 16px calc(24px + env(safe-area-inset-bottom));
+  box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.18);
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.sheet-topline {
+  width: 54px;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  margin: 0 auto 14px;
+}
+
+.sheet-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.sheet-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.checkout-choice-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.checkout-choice-actions .primary-btn,
+.checkout-choice-actions .secondary-btn {
+  min-height: 64px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.checkout-choice-actions .primary-btn {
+  background: linear-gradient(135deg, #f0b92c, #e08b1e);
+  color: #1e1e1e;
+  border: none;
+  box-shadow: 0 10px 22px rgba(224, 139, 30, 0.24);
+}
+
+.checkout-choice-actions .secondary-btn {
+  background: #fff;
+  color: #1e1e1e;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.checkout-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkout-form .field span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4c4c4c;
+}
+
+.checkout-form input,
+.checkout-form textarea,
+.checkout-form select {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  font: inherit;
+  color: #202020;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.checkout-form textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus,
+.checkout-form select:focus {
+  border-color: rgba(238, 93, 43, 0.45);
+  box-shadow: 0 0 0 4px rgba(238, 93, 43, 0.1);
+}
+
+.checkout-form input[disabled] {
+  background: #f7f7f7;
+  color: #666;
+}
+
+.checkout-actions {
+  margin-top: 6px;
+}
+
+.checkout-submit {
+  width: 100%;
+  min-height: 54px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ee5d2b, #f38f2d);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: 0 12px 24px rgba(238, 93, 43, 0.28);
+}
+
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: none;
+  background: #f4f4f4;
+  color: #222;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9b7a13;
+}
+
+/* iPhone-like time input feel */
+.checkout-form input[type="time"] {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 56px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.03), rgba(0,0,0,0.00) 24%, rgba(0,0,0,0.00) 76%, rgba(0,0,0,0.03)),
+    #fff;
+  border-radius: 20px;
+}
+
+.checkout-form input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 0.75;
+}
+
+@media (max-width: 640px) {
+  .checkout-choice-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-sheet-inner {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .checkout-choice-actions .primary-btn,
+  .checkout-choice-actions .secondary-btn {
+    min-height: 58px;
+    font-size: 15px;
+  }
+
+  .checkout-submit {
+    min-height: 52px;
+  }
+}
