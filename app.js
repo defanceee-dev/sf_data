@@ -72,26 +72,25 @@ function initTelegram() {
 }
 
 function wireStaticEvents() {
-  if (els.floatingCartBtn) els.floatingCartBtn.addEventListener("click", openCart);
-  if (els.floatingInfoBtn) els.floatingInfoBtn.addEventListener("click", openInfo);
-  if (els.floatingCategoriesBtn) els.floatingCategoriesBtn.addEventListener("click", openCategories);
+  els.floatingCartBtn?.addEventListener("click", openCart);
+  els.floatingInfoBtn?.addEventListener("click", openInfo);
+  els.floatingCategoriesBtn?.addEventListener("click", openCategories);
 
-  if (els.closeCartBtn) els.closeCartBtn.addEventListener("click", closeCart);
-  if (els.closeCategoriesBtn) els.closeCategoriesBtn.addEventListener("click", closeCategories);
-  if (els.closeCheckoutBtn) els.closeCheckoutBtn.addEventListener("click", closeCheckout);
-  if (els.closeInfoBtn) els.closeInfoBtn.addEventListener("click", closeInfo);
+  els.closeCartBtn?.addEventListener("click", closeCart);
+  els.closeCategoriesBtn?.addEventListener("click", closeCategories);
+  els.closeCheckoutBtn?.addEventListener("click", closeCheckout);
+  els.closeInfoBtn?.addEventListener("click", closeInfo);
 
-  if (els.clearCartBtn) els.clearCartBtn.addEventListener("click", clearCart);
-  if (els.checkoutBtn) els.checkoutBtn.addEventListener("click", openCheckout);
-  if (els.repeatOrderBtn) els.repeatOrderBtn.addEventListener("click", repeatLastOrder);
-  if (els.overlay) els.overlay.addEventListener("click", closeAllSheets);
+  els.clearCartBtn?.addEventListener("click", clearCart);
+  els.checkoutBtn?.addEventListener("click", openCheckout);
+  els.repeatOrderBtn?.addEventListener("click", repeatLastOrder);
 
-  if (els.searchInput) {
-    els.searchInput.addEventListener("input", (e) => {
-      state.currentSearch = e.target.value.trim().toLowerCase();
-      renderMenu();
-    });
-  }
+  els.overlay?.addEventListener("click", closeAllSheets);
+
+  els.searchInput?.addEventListener("input", (e) => {
+    state.currentSearch = e.target.value.trim().toLowerCase();
+    renderMenu();
+  });
 }
 
 async function loadMenu() {
@@ -197,7 +196,7 @@ function renderMenu() {
       <div class="items-grid"></div>
     `;
 
-    section.querySelector(".accordion-btn").addEventListener("click", () => toggleCategory(category.id));
+    section.querySelector(".accordion-btn")?.addEventListener("click", () => toggleCategory(category.id));
 
     const grid = section.querySelector(".items-grid");
     category.filteredItems.forEach((item) => grid.appendChild(renderItemCard(item, category)));
@@ -310,9 +309,9 @@ function updateCartUI() {
         <strong>${item.qty * item.price} грн</strong>
       `;
 
-      row.querySelector('[data-act="minus"]').addEventListener("click", () => changeQty(item.id, -1));
-      row.querySelector('[data-act="plus"]').addEventListener("click", () => changeQty(item.id, 1));
-      row.querySelector('[data-act="remove"]').addEventListener("click", () => removeFromCart(item.id));
+      row.querySelector('[data-act="minus"]')?.addEventListener("click", () => changeQty(item.id, -1));
+      row.querySelector('[data-act="plus"]')?.addEventListener("click", () => changeQty(item.id, 1));
+      row.querySelector('[data-act="remove"]')?.addEventListener("click", () => removeFromCart(item.id));
 
       els.cartItems.appendChild(row);
     });
@@ -409,6 +408,7 @@ function openCheckout() {
   modal.classList.remove("hidden");
   els.overlay?.classList.remove("hidden");
   modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
 
   modal.innerHTML = `
     <div class="checkout-sheet-inner">
@@ -418,7 +418,7 @@ function openCheckout() {
           <p class="eyebrow">Оформлення</p>
           <h2>Оберіть спосіб отримання</h2>
         </div>
-        <button type="button" class="icon-btn" id="closeCheckoutChoiceBtn">×</button>
+        <button type="button" class="icon-btn" id="closeCheckoutChoiceBtn">✕</button>
       </div>
 
       <div class="checkout-choice-actions">
@@ -427,6 +427,8 @@ function openCheckout() {
       </div>
     </div>
   `;
+
+  requestAnimationFrame(() => modal.classList.add("open"));
 
   document.getElementById("closeCheckoutChoiceBtn")?.addEventListener("click", closeCheckout);
   modal.querySelector('[data-mode="delivery"]')?.addEventListener("click", () => renderCheckoutForm("delivery"));
@@ -440,14 +442,16 @@ function renderCheckoutForm(mode) {
   els.checkoutModal.innerHTML = `
     <div class="checkout-sheet-inner">
       <div class="sheet-topline"></div>
+
       <div class="sheet-header">
         <div>
           <p class="eyebrow">Оформлення</p>
           <h2>${isDelivery ? "Доставка" : "Самовивіз"}</h2>
         </div>
+
         <div class="sheet-header-actions">
           <button type="button" class="icon-btn" id="backToChoiceBtn">←</button>
-          <button type="button" class="icon-btn" id="closeCheckoutFormBtn">×</button>
+          <button type="button" class="icon-btn" id="closeCheckoutFormBtn">✕</button>
         </div>
       </div>
 
@@ -511,6 +515,8 @@ function renderCheckoutForm(mode) {
     </div>
   `;
 
+  requestAnimationFrame(() => els.checkoutModal?.classList.add("open"));
+
   document.getElementById("backToChoiceBtn")?.addEventListener("click", openCheckout);
   document.getElementById("closeCheckoutFormBtn")?.addEventListener("click", closeCheckout);
 
@@ -519,9 +525,14 @@ function renderCheckoutForm(mode) {
 }
 
 function closeCheckout() {
-  els.checkoutModal?.classList.add("hidden");
-  els.checkoutModal?.setAttribute("aria-hidden", "true");
-  maybeRestoreFloating();
+  els.checkoutModal?.classList.remove("open");
+
+  setTimeout(() => {
+    els.checkoutModal?.classList.add("hidden");
+    els.checkoutModal?.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+    maybeRestoreFloating();
+  }, 220);
 }
 
 function closeAllSheets() {
@@ -535,10 +546,12 @@ function closeAllSheets() {
   els.infoModal?.classList.add("hidden");
   els.infoModal?.setAttribute("aria-hidden", "true");
 
+  els.checkoutModal?.classList.remove("open");
   els.checkoutModal?.classList.add("hidden");
   els.checkoutModal?.setAttribute("aria-hidden", "true");
 
   els.overlay?.classList.add("hidden");
+  document.body.classList.remove("modal-open");
   setFloatingVisible(true);
 }
 
@@ -551,6 +564,7 @@ function maybeRestoreFloating() {
 
   if (!anyOpen) {
     els.overlay?.classList.add("hidden");
+    document.body.classList.remove("modal-open");
     setFloatingVisible(true);
   }
 }
