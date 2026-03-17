@@ -1,0 +1,3 @@
+Оновлено відправку webhook для мобільного Telegram WebView.
+Тепер submitOrder використовує fetch з mode='no-cors' і Content-Type='text/plain;charset=UTF-8'.
+Також у index.html оновлено cache-busting до ?v=5 для app.js і style.css.
