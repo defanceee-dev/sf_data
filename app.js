@@ -618,7 +618,6 @@ async function submitOrder(event, mode = "delivery") {
     if (CONFIG.webhookUrl && !CONFIG.webhookUrl.includes("PASTE_")) {
       await fetch(CONFIG.webhookUrl, {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=UTF-8" },
         body: JSON.stringify(payload),
       });
