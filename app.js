@@ -1,5 +1,5 @@
 const CONFIG = {
-  webhookUrl: "https://hook.eu1.make.com/4g2rl5l2j9uogybctr5ypsahp1k4t51s",
+  webhookUrl: "https://eozs7psus64evlk.m.pipedream.net/",
   storageKeys: {
     cart: "spaceroll_cart_v1",
     lastOrder: "spaceroll_last_order_v1",
